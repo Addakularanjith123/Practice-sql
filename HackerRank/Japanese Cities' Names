@@ -1,0 +1,2 @@
+select name FROM city
+where countrycode LIKE "JPN"
