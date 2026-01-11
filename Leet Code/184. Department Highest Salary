@@ -1,0 +1,19 @@
+with dept_max_salary as
+    (select d.name as Department,e.name as Employee,e.salary as Salary,
+    dense_rank () over(partition by d.name order by e.salary desc) as drnk
+from Employee e 
+join Department d on e.departmentId=d.id
+group by e.name
+    ) 
+select m.Department,m.Employee,m.Salary from dept_max_salary m
+where drnk=1;
+
+-- SELECT Department.name AS Department,Employee.name AS Employee,salary
+-- FROM Employee
+-- INNER JOIN Department ON Employee.departmentId=Department.id
+-- WHERE(departmentId,Salary) IN
+-- (
+-- SELECT departmentId, MAX(Salary) FROM Employee
+-- GROUP BY departmentId
+-- )
+
