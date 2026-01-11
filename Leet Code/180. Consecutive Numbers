@@ -1,0 +1,9 @@
+# Write your MySQL query statement below
+select distinct num as ConsecutiveNums
+from (
+    select num,
+    lead(num,1) over(order by id) as p1,
+    lead(num,2) over(order by id) as p2
+    from logs
+) nest
+where num=p1 and num=p2;
