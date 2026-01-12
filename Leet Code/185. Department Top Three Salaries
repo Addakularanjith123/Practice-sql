@@ -5,8 +5,8 @@ with Dept_max_salary as
         dense_rank() over(partition by d.name order by e.salary desc) as drnk
     from Employee e
     join Department d on d.id=e.departmentId
-    group by e.name
+    -- group by e.name # There are 2 members with the same name in different department
     )
 select Department,Employee,Salary
 from Dept_max_salary
-where drnk <=3;
+where drnk <4;
