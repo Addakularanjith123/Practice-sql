@@ -1,0 +1,15 @@
+# Write your MySQL query statement below
+with cnt as (select customer_number,count(*) as counting
+from Orders
+group by customer_number
+)
+select cnt.customer_number
+from cnt
+order by cnt.counting desc
+limit 1;
+
+
+
+-- with cte as(
+-- select customer_number, rank() over (order by count(customer_number) desc) rnk from Orders group by customer_number)
+-- select customer_number from cte where rnk=1
