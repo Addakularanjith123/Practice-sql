@@ -1,0 +1,24 @@
+# Write your MySQL query statement below
+select 
+case 
+    when id%2=0 then id-1 
+    when id%2=1 and id+1 not in (select id from Seat) then id else id+1
+    end as id,student
+    from seat
+    #group by id
+    order by id
+
+
+
+/*
+
+select 
+case
+    when id%2=1 and lead(id) over(order by id) is not null 
+        then lead(id) over(order by id)
+    when id%2=0 then lag(id) over(order by id) else id
+    end as id,student
+    from seat
+    order by id
+
+*/
