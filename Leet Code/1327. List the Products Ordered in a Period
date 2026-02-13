@@ -1,0 +1,26 @@
+-- # Write your MySQL query statement below
+SELECT p.product_name, SUM(o.unit) as unit
+FROM Products p
+JOIN Orders o
+ON p.product_id = o.product_id
+WHERE o.order_date LIKE '2020-02-%'
+GROUP BY p.product_id
+HAVING unit >= 100;
+
+-- WITH cte AS (
+--     SELECT 
+--         p.product_id,
+--         p.product_name,
+--         SUM(o.unit) AS unit
+--     FROM Products p
+--     JOIN Orders o 
+--         ON p.product_id = o.product_id
+--     WHERE o.order_date >= '2020-02-01'
+--       AND o.order_date < '2020-03-01'
+--     GROUP BY p.product_id, p.product_name
+-- )
+
+-- SELECT product_name, unit
+-- FROM cte
+-- WHERE unit >= 100
+-- ORDER BY unit DESC;
