@@ -1,0 +1,8 @@
+-- select * from ms_employee_salary;
+with cte as (
+    select *,dense_rank() over (partition by id order by salary desc) as dnk
+    from ms_employee_salary
+    )
+select id,first_name,last_name,department_id,salary
+from cte
+where dnk=1;
