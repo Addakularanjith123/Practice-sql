@@ -1,0 +1,9 @@
+-- select * from worker;
+with cte as(
+    select t.worker_title,dense_rank() over(order by w.salary desc) as dnk
+    from worker w
+    join title t on w.worker_id=t.worker_ref_id
+)
+select worker_title
+from cte
+where dnk=1;
