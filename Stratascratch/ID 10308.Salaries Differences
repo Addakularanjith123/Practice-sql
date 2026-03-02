@@ -1,0 +1,47 @@
+#Option 1:
+WITH cte AS (
+    SELECT 
+        MAX(salary) AS sal,
+        dd.department
+    FROM db_employee de
+    JOIN db_dept dd 
+        ON de.department_id = dd.id
+    GROUP BY dd.department
+)
+SELECT 
+ (max(sal)-min(sal)) as sal_diff
+FROM cte
+WHERE department IN ('marketing', 'engineering');
+
+#Option 2:
+
+SELECT 
+    ABS(
+        MAX(CASE 
+                WHEN d.department = 'marketing' THEN e.salary 
+            END)
+        -
+        MAX(CASE 
+                WHEN d.department = 'engineering' THEN e.salary 
+            END)
+    ) AS salary_difference
+FROM db_employee e
+JOIN db_dept d 
+    ON e.department_id = d.id;
+
+#Option 3:
+WITH cte AS (
+    SELECT 
+        MAX(salary) AS sal,
+        dd.department
+    FROM db_employee de
+    JOIN db_dept dd 
+        ON de.department_id = dd.id
+    GROUP BY dd.department
+)
+
+SELECT ABS(m.sal - e.sal) AS salary_difference
+FROM cte m
+JOIN cte e
+  ON m.department = 'marketing'
+ AND e.department = 'engineering';
