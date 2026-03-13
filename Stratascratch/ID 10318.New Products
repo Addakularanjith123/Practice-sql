@@ -1,0 +1,31 @@
+-- select * from car_launches;
+
+SELECT company_name,
+      COUNT(CASE WHEN year = 2020 THEN 1 END) - COUNT(CASE WHEN year = 2019 THEN 1 END) AS total_launch
+FROM car_launches
+GROUP BY company_name;
+
+-- SELECT company_name,
+--       COUNT(CASE WHEN year = 2020 THEN 1 END) as cnt
+-- from car_launches
+-- WITH cte1 AS (
+--     SELECT company_name, COUNT(*) AS year_2020
+--     FROM car_launches
+--     WHERE year = 2020
+--     GROUP BY company_name
+-- ),
+-- cte2 AS (
+--     SELECT company_name, COUNT(*) AS year_2019
+--     FROM car_launches
+--     WHERE year = 2019
+--     GROUP BY company_name
+-- )
+
+-- SELECT 
+--     c1.company_name,
+--     c1.year_2020 - c2.year_2019 AS net_difference
+-- FROM cte1 c1
+-- JOIN cte2 c2
+-- ON c1.company_name = c2.company_name;
+
+
