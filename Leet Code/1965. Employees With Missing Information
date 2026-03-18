@@ -1,0 +1,42 @@
+-- -- # Write your MySQL query statement below
+with cte as(
+    SELECT * FROM Employees
+    UNION ALL
+    SELECT * FROM Salaries
+) 
+select employee_id
+from cte
+GROUP BY employee_id
+HAVING COUNT(*) = 1
+ORDER BY employee_id ASC;
+
+
+-- -- select employee_id
+-- -- from Employees
+-- -- where employee_id not in (select employee_id from Salaries)
+-- -- union
+-- -- select employee_id
+-- -- from Salaries 
+-- -- where employee_id not in (select employee_id from Employees)
+-- -- order by employee_id
+
+-- with cte as (
+--     select e.employee_id,e.name,s.salary
+--     from Employees e
+--     left join Salaries s on e.employee_id=s.employee_id
+--     union
+--     select s.employee_id,e.name,s.salary
+--     from employees e
+--     right join Salaries s on e.employee_id=s.employee_id
+-- )
+-- select employee_id 
+-- from cte
+-- where name is null or salary is null
+-- order by employee_id;
+
+
+
+
+
+
+
