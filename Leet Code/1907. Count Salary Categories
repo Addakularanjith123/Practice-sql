@@ -18,6 +18,7 @@ SELECT
 FROM Accounts
 WHERE income > 50000;
 
+
 -- # 1. Create a dummy table with all 3 required category names
 -- WITH CategoryTable AS (
 --     SELECT 'Low Salary' AS category
