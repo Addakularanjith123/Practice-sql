@@ -1,0 +1,6 @@
+-- select * from customers;
+select c.id,c.first_name,sum(total_order_cost)
+from customers c
+join orders r on c.id=r.cust_id
+group by c.id
+order by c.first_name asc;
