@@ -1,0 +1,184 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyOrUC63KAtpeN0rH2Rl6PWA",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Addakularanjith123/Practice-sql/blob/main/List%20methods%201\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "uZgp_C768CGN",
+        "outputId": "1b305073-35c9-42f2-8c61-15d164ae8436"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "hello numpy\n"
+          ]
+        }
+      ],
+      "source": [
+        "\n",
+        "lkjknkjnk\n",
+        "print(\"hello numpy\")"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "print('pandas has to be start')"
+      ],
+      "metadata": {
+        "id": "iF6EmPnK8qc-",
+        "outputId": "02933842-ea28-463c-b057-ef0751908310",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "pandas has to be start\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "x=[1,2,3]\n",
+        "y=x\n",
+        "y.append(4)\n",
+        "print(x)"
+      ],
+      "metadata": {
+        "id": "qPzr7G-US-6D",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "f9351e9b-7d35-42d3-f890-afe7036ddba1"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[1, 2, 3, 4]\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "n=[1,2,3,8,9,10]\n",
+        "print(n)\n",
+        "n.remove(2) #(Won't check the index)remove the element if it's present in the list else error\n",
+        "print(n)\n",
+        "n.pop(4) #specific index element will be removed, changed from 5 to 4\n",
+        "print(n)\n",
+        "n.append(4)#only add one element at the end of the list\n",
+        "print(n)\n",
+        "n.extend([5,6,7,11,12]) #adding multiple elements at the end of the list\n",
+        "print(n)\n",
+        "n.clear() # Clears the entire list, no arguments needed\n",
+        "print(n)\n"
+      ],
+      "metadata": {
+        "id": "qXg-eauLPfJV",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "bae2b422-6bf3-434b-c4df-e154430df48d"
+      },
+      "execution_count": 17,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[1, 2, 3, 8, 9, 10]\n",
+            "[1, 3, 8, 9, 10]\n",
+            "[1, 3, 8, 9]\n",
+            "[1, 3, 8, 9, 4]\n",
+            "[1, 3, 8, 9, 4, 5, 6, 7, 11, 12]\n",
+            "[]\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "c668fd28",
+        "outputId": "63442f17-f90c-467e-f5c3-ee285babf060"
+      },
+      "source": [
+        "my_list = [10, 20, 30, 40, 50]\n",
+        "print(f\"Original list: {my_list}\")\n",
+        "\n",
+        "# Remove the element at index 2 (which is 30)\n",
+        "removed_element = my_list.pop(2)\n",
+        "\n",
+        "print(f\"List after removing element at index 2: {my_list}\")\n",
+        "print(f\"Removed element: {removed_element}\")"
+      ],
+      "execution_count": 6,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Original list: [10, 20, 30, 40, 50]\n",
+            "List after removing element at index 2: [10, 20, 40, 50]\n",
+            "Removed element: 30\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "kS8miJ2bjFT2"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
