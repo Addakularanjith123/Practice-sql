@@ -1,0 +1,6 @@
+-- select distinct fp.post_id,fp.poster,fp.post_text,fp.post_keywords,fp.post_date
+select distinct fp.*
+from facebook_posts fp
+join facebook_reactions fr on fp.post_id=fr.post_id
+where fr.reaction like 'heart'
+-- group by fp.post_id       # we cann't use because there are multiple users with the same reation either we have to use an aggrigate function 
