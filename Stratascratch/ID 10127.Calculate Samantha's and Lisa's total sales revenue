@@ -1,0 +1,5 @@
+-- select * from sales_performance;
+select sum(sales_revenue) as total_revenue
+from sales_performance
+where salesperson in ('Samantha','Lisa')
+-- where salesperson='Samantha' or salesperson='Lisa'
