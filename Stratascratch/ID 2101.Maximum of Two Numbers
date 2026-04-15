@@ -1,0 +1,15 @@
+SELECT dn1.number AS number1,
+      dn2.number AS number2,
+if(dn1.number>dn2.number,dn1.number,dn2.number) as max_number
+FROM deloitte_numbers AS dn1
+CROSS JOIN deloitte_numbers AS dn2;
+
+
+-- with cte as (
+-- select number as number1,min(number)over() as number2 from deloitte_numbers
+-- )
+-- select *,
+-- if(number1>number2,number1,number2) as max_number
+-- from cte
+-- order by max_number desc
+
