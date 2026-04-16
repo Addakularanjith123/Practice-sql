@@ -1,3 +1,4 @@
+
 SELECT 
     video_id, 
     COUNT(DISTINCT coalesce(user_firstname, user_lastname)) AS num_unique_users
