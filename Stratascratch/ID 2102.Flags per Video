@@ -1,0 +1,15 @@
+SELECT 
+    video_id, 
+    COUNT(DISTINCT coalesce(user_firstname, user_lastname)) AS num_unique_users
+FROM user_flags
+WHERE flag_id IS NOT NULL
+GROUP BY video_id;
+
+
+-- -- -- select * from user_flags;
+-- -- select video_id,count(distinct(group_concat(user_firstname,' ',user_lastname))) as num_unique_users #Aggregate inside the aggregation so invalid
+-- -- from user_flags
+-- -- where flag_id is not null
+-- -- group by video_id
+-- -- -- ,user_firstname,user_lastname
+
