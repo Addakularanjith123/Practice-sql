@@ -1,0 +1,54 @@
+WITH cte1 AS (
+    SELECT manager_empl_id, AVG(salary) AS avg_reportee_sal
+    FROM map_employee_hierarchy h
+    INNER JOIN dim_employee e
+    ON h.empl_id = e.empl_id
+    GROUP BY manager_empl_id
+),
+cte2 AS (
+    SELECT manager_empl_id, salary
+    FROM map_employee_hierarchy h
+    INNER JOIN dim_employee e
+    ON h.manager_empl_id = e.empl_id
+)
+SELECT DISTINCT a.manager_empl_id, b.salary, a.avg_reportee_sal
+FROM cte1 a
+INNER JOIN cte2 b
+ON a.manager_empl_id = b.manager_empl_id
+WHERE b.salary < (2 * a.avg_reportee_sal);
+
+-- select e.manager_empl_id, max(dim2.salary) as manager_salary, avg(dim1.salary) as avg_employee_salary
+
+-- from map_employee_hierarchy e
+
+-- join dim_employee dim1 on e.empl_id = dim1.empl_id
+
+-- join dim_employee dim2 on e.manager_empl_id = dim2.empl_id
+
+-- group by e.manager_empl_id
+
+-- having max(dim2.salary)<2*avg(dim1.salary)
+
+
+
+-- -- -- select * from map_employee_hierarchy;
+-- -- -- select meh.empl_id,avg(de.salary)
+
+-- -- select emh1.empl_id,emh2.manager_empl_id
+-- -- from map_employee_hierarchy emh1
+-- -- join map_employee_hierarchy emh2 on emh1.empl_id=emh2.empl_id
+-- -- join dim_employee de on de.empl_id=emh1.empl_id
+-- -- -- where emh2.manager_empl_id>=(select 2* avg(salary) from dim_employee)
+-- -- group by emh2.manager_empl_id
+
+
+-- select count(*) as cnt,meh.manager_empl_id,meh.empl_id
+-- ,avg(de.salary) as average
+-- from dim_employee de
+-- join map_employee_hierarchy meh on meh.empl_id=de.empl_id
+-- -- where meh.manager_empl_id >=(select 2*avg(salary) from dim_employee)
+-- group by meh.manager_empl_id
+
+-- -- select count(*) as cnt, 
+
+
