@@ -48,7 +48,3 @@ WHERE b.salary < (2 * a.avg_reportee_sal);
 -- join map_employee_hierarchy meh on meh.empl_id=de.empl_id
 -- -- where meh.manager_empl_id >=(select 2*avg(salary) from dim_employee)
 -- group by meh.manager_empl_id
-
--- -- select count(*) as cnt, 
-
-
