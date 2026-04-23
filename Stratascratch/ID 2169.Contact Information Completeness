@@ -1,0 +1,22 @@
+-- -- -- select * from techcorp_workforce;
+-- -- with cte as(
+select (select count(id) from techcorp_workforce where phone_number is null) * 1.0 /count(*) as null_count
+from techcorp_workforce
+-- -- )
+-- -- select abs(null_count/total)
+-- -- from cte
+
+
+-- WITH cte AS (
+--     SELECT
+--         COUNT(id) AS total,
+--         (
+--             SELECT COUNT(*) FROM techcorp_workforce
+--             WHERE phone_number IS NULL
+--         ) AS null_count
+--     FROM techcorp_workforce
+-- )
+
+-- -- Multiply by 1.0 to force decimal division
+-- SELECT (null_count * 1.0 / total) AS ratio
+-- FROM cte
