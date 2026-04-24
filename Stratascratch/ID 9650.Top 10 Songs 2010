@@ -1,0 +1,36 @@
+select distinct(year_rank) as rank ,group_name, song_name
+from billboard_top_100_year_end
+where year = 2010
+order by year_rank asc
+limit 10;
+
+-- -- -- select * from billboard_top_100_year_end;
+-- -- -- select * from billboard_top_100_year_end;
+-- -- SELECT
+-- --     song_name,
+-- --     group_name,
+-- --     DENSE_RANK() OVER (PARTITION BY year ORDER BY id) AS year_rank
+-- -- FROM billboard_top_100_year_end
+-- -- WHERE year = 2010
+-- -- GROUP BY song_name
+-- -- LIMIT 10
+-- -- select * from billboard_top_100_year_end;
+-- -- SELECT
+-- --     song_name,
+-- --     group_name,
+-- --     DENSE_RANK() OVER (PARTITION BY year ORDER BY id) AS year_rank
+-- -- FROM billboard_top_100_year_end
+-- -- WHERE year = 2010
+-- -- GROUP BY song_name
+-- -- LIMIT 10
+-- select * from billboard_top_100_year_end;
+
+-- select distinct group_name,song_name,
+-- -- year_rank as rank
+-- rank() over(order by year_rank asc) as rank
+-- from billboard_top_100_year_end
+-- where year = 2010
+-- order by year_rank asc
+-- limit 10
+
+
