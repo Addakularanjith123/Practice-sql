@@ -1,0 +1,6 @@
+-- select * from online_store_customers;
+select distinct osc.customer_id,osc.customer_name
+from online_store_customers osc
+join online_store_orders oso on oso.customer_id=osc.customer_id
+where amount > 100
+order by customer_id
