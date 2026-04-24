@@ -1,0 +1,7 @@
+-- select * from techcorp_workforce;
+select department,count(*) as headcount,sum(salary) as total_payroll,avg(salary) as avg_salary
+from techcorp_workforce
+-- where extract(year from joining_date)>2020
+WHERE joining_date > '2020-01-01'
+group by department
+having count(*)>5
