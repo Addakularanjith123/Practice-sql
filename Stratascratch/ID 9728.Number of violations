@@ -1,0 +1,4 @@
+select extract(year from inspection_date) as inspction_year,count(*) as n_violations
+from sf_restaurant_health_violations
+where business_name = 'Roxanne Cafe'
+group by extract(year from inspection_date)
