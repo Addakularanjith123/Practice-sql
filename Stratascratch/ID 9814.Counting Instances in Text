@@ -1,0 +1,74 @@
+-- -- -- -- select * from google_file_store;
+
+select 'bull' as word,(select count(*) from google_file_store where lower(contents) like '% bull %') as nentry
+
+union
+
+select 'bear' as word,(select count(*) from google_file_store where lower(contents) like '% bear %') as nentry
+
+
+
+
+
+
+
+-- -- -- SELECT 
+-- -- --     'bull' AS word, 
+-- -- --     COUNT(*) AS nentry
+-- -- -- FROM (
+-- -- --     SELECT 
+-- -- --         regexp_matches(contents, '\bbull\b', 'gi') 
+-- -- --     FROM google_file_store
+-- -- -- ) sub
+
+-- -- -- UNION ALL
+
+-- -- -- SELECT 
+-- -- --     'bear' AS word, 
+-- -- --     COUNT(*) AS nentry
+-- -- -- FROM (
+-- -- --     SELECT 
+-- -- --         regexp_matches(contents, '\bbear\b', 'gi') 
+-- -- --     FROM google_file_store
+-- -- -- ) sub;
+
+-- -- select "bull" as word, (Select COUNT(*) as count FROM google_file_store WHERE lower(contents) like '% bull %'
+-- --     ) as count
+-- -- Union
+-- -- select "bear" as word, (Select COUNT(*) as count FROM google_file_store WHERE lower(contents) like '% bear %'
+-- --     ) as count
+
+
+-- SELECT
+--     bull AS word,
+--     (SELECT
+--         SUM(
+--             ROUND(
+--                 (
+--                     LENGTH(contents)
+--                     - LENGTH(REPLACE(contents, bull, ""))
+--                 ) / LENGTH(bull)
+--             )
+--         )
+--     FROM google_file_store) AS count
+-- UNION
+-- SELECT
+--     bear,
+--     (SELECT
+--         SUM(
+--             ROUND(
+--                 (
+--                     LENGTH(contents)
+--                     - LENGTH(REPLACE(contents, bear, ""))
+--                 ) / LENGTH(bear)
+--             )
+--         )
+--     FROM google_file_store) AS count
+
+
+
+
+
+
+
+
