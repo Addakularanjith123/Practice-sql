@@ -1,0 +1,3 @@
+-- select * from worker;
+select * from worker
+where first_name like "_____h"
