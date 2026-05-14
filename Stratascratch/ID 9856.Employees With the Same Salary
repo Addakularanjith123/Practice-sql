@@ -1,0 +1,34 @@
+select t1.worker_id,t1.first_name,t1.salary
+from worker t1
+join worker t2 on t1.salary=t2.salary
+where t1.salary=t2.salary and t1.worker_id!=t2.worker_id
+
+
+
+-- with cte as(
+--     select worker_id,first_name,salary
+--     -- ,dense_rank() over (partition by salary) as dnk
+--     from worker
+--     group by salary
+--     having count(*)>1
+-- )
+-- select worker_id,first_name,salary
+-- from worker 
+-- where salary in (select salary from cte) 
+
+
+
+-- -- with cte as(
+-- --     select worker_id,first_name,salary,count(*) over(partition by salary) as cnt
+-- --     from worker
+-- --     )
+-- -- select worker_id,first_name,salary
+-- -- from cte
+-- -- where cnt>1
+-- -- ORDER BY salary DESC;
+
+
+
+
+
+
