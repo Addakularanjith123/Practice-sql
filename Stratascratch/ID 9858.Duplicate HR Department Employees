@@ -1,0 +1,9 @@
+select first_name,department
+from worker
+where department="HR"
+group by worker_id
+union all
+select first_name,department
+from worker
+where department="HR"
+group by worker_id
