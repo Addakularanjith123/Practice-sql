@@ -16,3 +16,4 @@ where salary < (select max(salary) from employee)
 --     from employee
 --     )t
 -- where dnk=2
+
