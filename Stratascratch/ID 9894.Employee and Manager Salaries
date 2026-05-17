@@ -1,0 +1,6 @@
+-- select * from employee;
+select e1.first_name,e1.salary
+from employee e1
+join employee e2 on e2.id=e1.manager_id
+where e1.salary>e2.salary
+
