@@ -2,6 +2,7 @@
 with cte as(
     select first_name,target,dense_rank() over(partition by department order by target desc) as dnk
     from salesforce_employees
+    -- INNER JOIN salesforce_employees AS m ON e.manager_id = m.id #Not required but for more efficiency 
     where manager_id=13
     )
 select first_name,target 
