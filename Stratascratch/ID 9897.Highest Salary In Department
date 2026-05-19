@@ -1,0 +1,7 @@
+with cte as (
+    select department,first_name,salary,dense_rank() over(partition by department order by salary desc) as dnk
+    from employee
+    )
+select department,first_name,salary
+from cte
+where dnk=1
