@@ -1,0 +1,10 @@
+-- select * from salesforce_employees;
+with cte as(
+    select first_name,target,dense_rank() over(partition by department order by target desc) as dnk
+    from salesforce_employees
+    where manager_id=13
+    )
+select first_name,target 
+from cte
+where dnk=1
+
