@@ -1,0 +1,5 @@
+-- select * from employee;
+select department
+from employee
+group by department
+having count(*)>5
