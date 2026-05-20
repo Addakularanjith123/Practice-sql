@@ -1,0 +1,6 @@
+-- select * from customers;
+select c.first_name,o.order_date,o.order_details,o.total_order_cost
+from customers c
+left join orders o on c.id=o.cust_id #Inner join is also fine
+where c.first_name='Jill' or c.first_name='Eva'
+order by c.id asc;
