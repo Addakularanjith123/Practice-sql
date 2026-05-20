@@ -1,0 +1,16 @@
+-- -- select * from spotify_worldwide_daily_song_ranking;
+
+select artist,count(*) as occurrences
+from spotify_worldwide_daily_song_ranking
+group by artist
+order by occurrences desc
+
+
+-- with cte as(
+--     select artist,count(*) over(partition by artist) as n_occurences
+--     from spotify_worldwide_daily_song_ranking
+--     )
+-- select * from cte
+-- group by artist
+-- order by n_occurences desc
+
