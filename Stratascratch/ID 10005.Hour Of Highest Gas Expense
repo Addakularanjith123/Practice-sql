@@ -1,0 +1,17 @@
+select hour
+from lyft_rides
+where gasoline_cost = (select max(gasoline_cost) from lyft_rides)
+
+-- select hour
+-- from lyft_rides
+-- order by gasoline_cost desc
+-- limit 1
+
+-- -- with cte as (
+-- --     select hour, max(gasoline_cost) as maxi
+-- --     from lyft_rides
+-- --     group by hour
+-- --     )
+-- -- select hour
+-- -- from cte 
+-- -- where maxi =(select max(maxi) from cte)
