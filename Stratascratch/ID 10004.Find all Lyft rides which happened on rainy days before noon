@@ -1,0 +1,5 @@
+-- select * from lyft_rides;
+select *
+from lyft_rides
+-- where weather like 'rainy' and hour <= 11
+where weather ='rainy' and hour between 0 and 11;
