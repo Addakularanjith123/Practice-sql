@@ -1,0 +1,21 @@
+-- -- select * from yelp_business;
+with cte as(
+    SELECT review_count,regexp_split_to_table(categories,';') AS category
+    FROM yelp_business
+    )
+select category,sum(review_count) as review_cnt
+from cte
+group by category
+order by review_cnt desc
+
+
+-- select categories,sum(review_count) as review_cnt
+-- from yelp_business
+-- group by categories
+-- order by review_cnt desc
+
+-- select review_count,SPLIT_PART (categories,';') as category
+-- from yelp_business
+
+
+v
