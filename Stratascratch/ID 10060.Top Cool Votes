@@ -1,0 +1,24 @@
+SELECT business_name, review_text
+FROM yelp_reviews
+WHERE cool = (SELECT max(cool) FROM yelp_reviews)
+
+
+-- -- SELECT business_name,
+-- --       review_text
+-- -- FROM (
+-- --     SELECT business_name,
+-- --           review_text,
+-- --           RANK() OVER (ORDER BY cool DESC) AS rk
+-- --     FROM yelp_reviews
+-- -- ) t
+-- -- WHERE rk = 1;
+
+-- SELECT business_name,
+--       review_text
+-- FROM (
+--     SELECT business_name,
+--           review_text,
+--           DENSE_RANK() OVER (ORDER BY cool DESC) AS dr
+--     FROM yelp_reviews
+-- ) t
+-- WHERE dr = 1;
