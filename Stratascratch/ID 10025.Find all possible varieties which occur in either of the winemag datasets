@@ -17,3 +17,4 @@ order by variety asc
 -- select variety 
 -- from cte
 -- order by variety asc    
+
