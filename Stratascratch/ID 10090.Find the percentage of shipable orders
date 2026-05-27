@@ -1,0 +1,75 @@
+-- -- -- -- -- -- select * from orders;
+SELECT 
+    ROUND(100.0 * COUNT(c.address) / COUNT(*), 2) AS percent_shipable --(100.0*13(total shipable orders))/31(total orders)=1300.0/31=41.93548387 because for the floating devision.
+    -- ROUND((COUNT(c.address) * 100.0) / COUNT(*),2) AS percent_shipable -- count(column) takes only column which hhas value then only it will count it won't takes not values
+    -- ROUND(100.0 * SUM(CASE WHEN c.address IS NOT NULL THEN 1 ELSE 0 END) / COUNT(*),2) AS percent_shipable
+    -- 100.0*SUM( CASE WHEN NULLIF(TRIM(c.address), '') IS NOT NULL THEN 1 ELSE 0 END )  / COUNT(DISTINCT o.id) AS percent_shipable  --for not consideing the empty string
+FROM orders o
+JOIN customers c
+ON c.id = o.cust_id;
+
+
+
+
+
+
+-- SUM(
+--     CASE 
+--         WHEN NULLIF(TRIM(c.address), '') IS NOT NULL 
+--         THEN 1 
+--         ELSE 0 
+--     END
+-- )
+
+-- It handles:
+
+-- NULL addresses
+-- empty strings ''
+-- strings containing only spaces ' '
+
+-- Step by step:
+
+-- 1. TRIM(c.address)
+
+-- Removes leading/trailing spaces.
+
+-- Example:
+
+-- '   NY   '  →  'NY'
+-- '     '     →  ''
+-- 2. NULLIF(TRIM(c.address), '')
+
+-- NULLIF(a,b) returns:
+
+-- NULL if a = b
+-- otherwise returns a
+
+-- Examples:
+
+-- NULLIF('NY','') → 'NY'
+-- NULLIF('','')   → NULL
+
+-- So blank addresses become NULL.
+
+-- 3. IS NOT NULL
+
+-- Checks whether a valid address exists.
+
+-- 4. CASE
+
+-- Converts rows into:
+
+-- 1 → shipable
+-- 0 → not shipable
+-- 5. SUM
+
+-- Adds all the 1s.
+
+-- Example:
+
+-- address	result
+-- NY	1
+-- NULL	0
+-- ''	0
+-- ' '	0
+
