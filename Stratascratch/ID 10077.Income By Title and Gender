@@ -1,0 +1,53 @@
+-- -- select * from sf_employee;
+
+WITH bonus_totals AS (
+    SELECT worker_ref_id,
+           SUM(bonus) AS ttl_bonus
+    FROM sf_bonus
+    GROUP BY worker_ref_id
+)
+SELECT e.employee_title,e.sex,avg(case when ttl_bonus is not null then e.salary+ttl_bonus end) as avg_compensation
+FROM sf_employee e
+INNER JOIN bonus_totals b
+ON e.id = b.worker_ref_id
+group by 1,2
+
+
+-- select se.employee_title,se.sex,
+-- avg(case when bonus is not null then se.salary+bonus end) as avg_compensation
+-- -- avg(case when bonus is null then se.salary end) as avg_compensation
+-- from sf_employee se
+-- join sf_bonus sb on sb.worker_ref_id=se.id
+-- -- where 
+-- group by se.employee_title,se.sex,department
+-- -- order by avg_compensation desc
+
+-- WITH bonus_totals AS (
+--     SELECT worker_ref_id,
+--           SUM(bonus) AS ttl_bonus
+--     FROM sf_bonus
+--     GROUP BY worker_ref_id
+-- ),
+-- compensation_data AS (
+--     SELECT e.employee_title,
+--           e.sex,
+--           e.salary + b.ttl_bonus AS total_compensation
+--     FROM sf_employee e
+--     INNER JOIN bonus_totals b
+--     ON e.id = b.worker_ref_id
+-- )
+-- SELECT employee_title,
+--       sex,
+--       AVG(total_compensation) AS avg_compensation
+-- FROM compensation_data
+-- GROUP BY employee_title, sex;
+
+
+
+
+-- -- select se.employee_title,se.sex,
+-- -- sum(case when bonus is not null then se.salary+bonus end) as avg_compensation
+-- -- from sf_employee se
+-- -- join sf_bonus sb on sb.worker_ref_id=se.id
+-- -- -- where 
+-- -- group by se.sex,se.employee_title
