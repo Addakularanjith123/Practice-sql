@@ -1,0 +1,59 @@
+-- select * from fb_friend_requests;
+
+SELECT
+    s.date,
+    ROUND(SUM(CASE WHEN a.action = 'accepted' THEN 1 ELSE 0 END) * 1.0 / COUNT(*), 2) AS acceptance_rate
+FROM fb_friend_requests AS s
+LEFT JOIN fb_friend_requests AS a
+    ON
+        s.user_id_sender = a.user_id_sender
+        AND s.user_id_receiver = a.user_id_receiver
+        AND a.action = 'accepted'
+WHERE s.action = 'sent'
+GROUP BY s.date
+-- HAVING SUM(CASE WHEN a.action = 'accepted' THEN 1 ELSE 0 END) > 0
+ORDER BY s.date;
+
+-- -- -- -- -- select * from fb_friend_requests;
+-- -- -- -- select date,round((sum(case when action='sent' then 1 else 0 end)*1.0)/sum(case when action='accepted' then 1 else 0 end),2) as percentage_acceptance
+-- -- -- -- from fb_friend_requests
+-- -- -- -- group by date
+
+-- -- -- with cte as (
+-- -- --     select date,sum(case when action='sent' then 1 else 0 end) as sent_sum,
+-- -- --             sum(case when action='accepted' then 1 else 0 end) as accept
+-- -- --     from fb_friend_requests
+-- -- --     group by user_id_sender,user_id_receiver,date
+-- -- --         )
+-- -- -- select date,round((1.0*sent_sum)/accept,2) as per
+-- -- -- from cte
+-- -- -- -- group by date
+
+-- -- WITH sent_cte AS
+-- --   (SELECT date, user_id_sender,
+-- --                 user_id_receiver
+-- --   FROM fb_friend_requests
+-- --   WHERE action='sent' ),
+-- -- accepted_cte AS
+-- --   (
+-- --   SELECT date, user_id_sender,
+-- --                 user_id_receiver
+-- --   FROM fb_friend_requests
+-- --   WHERE action='accepted'
+-- --   )
+
+
+-- SELECT
+--     s.date,
+--     ROUND(
+--         SUM(CASE WHEN a.user_id_sender IS NOT NULL THEN 1 ELSE 0 END) * 1.0
+--         / COUNT(*),
+--         2
+--     ) AS acceptance_rate
+-- FROM sent_requests s
+-- LEFT JOIN accepted_requests a
+--     ON s.user_id_sender = a.user_id_sender
+--   AND s.user_id_receiver = a.user_id_receiver
+-- GROUP BY s.date;
+
+
