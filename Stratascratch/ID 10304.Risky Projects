@@ -1,0 +1,47 @@
+-- select * from linkedin_projects;
+
+SELECT
+    a.title,
+    a.budget,
+    CEILING((a.end_date - a.start_date) * (SUM(c.salary) / 365)) AS prorated_employee_expense
+FROM linkedin_projects AS a
+INNER JOIN linkedin_emp_projects AS b ON a.id = b.project_id
+INNER JOIN linkedin_employees AS c ON b.emp_id = c.id
+GROUP BY
+    a.title,
+    a.budget,
+    a.end_date,
+    a.start_date
+HAVING CEILING((a.end_date - a.start_date) * (SUM(c.salary) / 365)) > a.budget
+ORDER BY a.title ASC;
+
+
+-- -- select * from linkedin_projects;
+-- with cte1 as (
+--     select id,sum(salary) as sum_salary
+--     from linkedin_employees le1
+--     join linkedin_emp_projects lep1 on lep1.emp_id=le1.id
+--     group by project_id,id
+--     )
+-- select lp.title,lp.budget,sum_salary as prorated_employee_expense
+-- from linkedin_projects lp
+-- join cte1 c1 on c1.id=lp.id
+-- where budget<sum_salary
+-- group by c1.id,lp.title
+
+
+-- -- with cte as(
+-- --     select lp.title,lp.budget
+-- --     -- ,id,sum_salary
+-- --     ,sum(le.salary) as prorated_employee_expense
+-- --     from linkedin_projects lp
+-- --     join linkedin_emp_projects lep on lep.project_id=lp.id
+-- --     join linkedin_employees le on le.id=lep.emp_id
+-- --     group by lp.title,lp.budget,lep.emp_id
+-- --     order by lp.title
+-- --     )
+-- -- select * from cte
+-- -- where budget < prorated_employee_expense
+-- -- -- group by ip.title,ip.budget
+-- -- order by title
+
