@@ -1,0 +1,29 @@
+-- select * from sf_transactions;
+-- -- select * from sf_transactions;
+WITH cte AS (
+    -- select date_format(created_at,'%y-m%')
+    -- select DATE_FORMAT(created_at,'%Y-%m') AS year_month
+    --     MySQL	                                PostgreSQL
+    -- DATE_FORMAT(date, '%Y-%m')	            TO_CHAR(date, 'YYYY-MM')
+    -- YEAR(date)	                            EXTRACT(YEAR FROM date)
+    SELECT
+        TO_CHAR(created_at, 'yyyy-mm') AS year_month,
+        SUM(value) AS revenue
+    FROM sf_transactions
+    GROUP BY TO_CHAR(created_at, 'yyyy-mm')
+    ORDER BY year_month
+),
+
+cte1 AS (
+    SELECT
+        year_month,
+        revenue,
+        LAG(revenue, 1) OVER (ORDER BY year_month) AS last_month_revenue
+    FROM cte
+)
+
+-- select * from cte1
+SELECT
+    year_month,
+    ROUND(((revenue - last_month_revenue) / last_month_revenue) * 100, 2) AS revenue_diff_pct
+FROM cte1
