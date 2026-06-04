@@ -1,0 +1,44 @@
+-- -- select * from amazon_transactions;
+SELECT DISTINCT a.user_id
+FROM amazon_transactions a
+JOIN amazon_transactions b
+    ON a.user_id = b.user_id
+WHERE DATEDIFF(a.created_at, b.created_at) BETWEEN 1 AND 7
+-- WHERE DATEDIFF(a.created_at, b.created_at) IN (1,2,3,4,5,6,7)
+order by a.user_id;
+
+
+-- WITH cte AS (
+--      
+--         user_id,
+--         created_at,
+--         LAG(created_at) OVER (
+--             PARTITION BY user_id
+--             ORDER BY created_at
+--         ) AS prev_date
+--     FROM amazon_transactions
+-- )
+-- SELECT DISTINCT user_id
+-- FROM cte
+-- WHERE DATEDIFF(created_at, prev_date) BETWEEN 1 AND 7;
+
+
+
+
+-- -- WITH ordered_tx AS (
+-- --     SELECT
+-- --         user_id,
+-- --         created_at AS tx_date,
+-- --         LAG(created_at) OVER (
+-- --             PARTITION BY user_id
+-- --             ORDER BY created_at
+-- --         ) AS prev_tx_date
+-- --     FROM amazon_transactions
+-- -- )
+
+-- -- SELECT DISTINCT user_id
+-- -- FROM ordered_tx
+-- -- WHERE
+-- --     prev_tx_date IS NOT NULL
+-- --     AND DATEDIFF(tx_date, prev_tx_date) > 0
+-- --     AND DATEDIFF(tx_date, prev_tx_date) <= 7;
