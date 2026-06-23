@@ -1,0 +1,4 @@
+-- SELECT * FROM candidates;
+select candidate_id
+from candidates
+where skills in ('Python','Tableau','PostgreSQL')
