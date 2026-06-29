@@ -1,0 +1,4 @@
+SELECT p.page_id from pages p
+left join page_likes pl on pl.page_id=p.page_id
+where pl.page_id IS NULL
+ORDER BY p.page_id asc;
