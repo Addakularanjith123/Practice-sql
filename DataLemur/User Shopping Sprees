@@ -1,0 +1,13 @@
+-- SELECT * FROM transactions;
+with cte as (
+  select user_id
+  ,transaction_date as lead_data
+  ,lead(transaction_date,1)over(partition by user_id order by transaction_date) as lead_data1
+  ,lead(transaction_date,2)over(partition by user_id order by transaction_date) as lead_data2
+  from transactions
+)
+select user_id
+from cte
+-- where lead_data2-lead_data1=1 and lead_data1-lead_data=1
+where lead_data + INTERVAL '1 day'= lead_data1 
+  and lead_data1 + interval '1 day'=lead_data2
