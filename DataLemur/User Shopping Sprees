@@ -9,5 +9,7 @@ with cte as (
 select user_id
 from cte
 -- where lead_data2-lead_data1=1 and lead_data1-lead_data=1
-where lead_data + INTERVAL '1 day'= lead_data1 
-  and lead_data1 + interval '1 day'=lead_data2
+-- where lead_data + INTERVAL '1 day'= lead_data1 
+--  and lead_data1 + interval '1 day'=lead_data2
+where extract(day from (lead_data2-lead_data1))=1 and 
+      extract(day from (lead_data1-lead_data))=1;
