@@ -2,5 +2,5 @@
 select c.id,c.first_name,sum(total_order_cost)
 from customers c
 join orders r on c.id=r.cust_id
-group by c.id
+group by c.id,c.first_name
 order by c.first_name asc;
