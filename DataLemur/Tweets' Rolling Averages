@@ -1,0 +1,21 @@
+
+SELECT    
+  user_id,    
+  tweet_date,
+  round(
+    AVG(tweet_count) OVER (
+      PARTITION BY user_id     
+      ORDER BY tweet_date
+      ROWS BETWEEN 2 PRECEDING AND CURRENT ROW),2) AS rolling_avg
+FROM tweets;
+
+-- -- SELECT * FROM tweets;
+-- with cte as (
+--   select user_id,tweet_date
+--   ,sum(tweet_count) as tweet_counts
+--   ,lag(tweet_count) over(partition by user_id order by tweet_date asc) as count
+--   ,lag(tweet_date)over(partition by user_id order by tweet_date asc)+INTERVAL '3' day as dates
+--   from tweets
+--   group by user_id,tweet_date #not required already partitioning in the window function
+-- )
+-- select * from cte
