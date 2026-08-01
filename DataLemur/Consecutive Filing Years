@@ -1,0 +1,35 @@
+with cte as(
+  select user_id,product
+  ,extract(year from filing_date) as year1
+  ,lag(extract(year from filing_date))over(partition by user_id order by filing_date asc) as cur_year
+  -- ,lag(extract(year from filing_date),1)over(partition by user_id order by filing_date asc) as cur_year1
+  ,lag(extract(year from filing_date),2)over(partition by user_id order by filing_date asc) as cur_year2
+  from filed_taxes
+  -- where product like 'TurboTax%'
+)
+-- select user_id
+-- from cte
+-- where cur_year-cur_year2=1 and year1-cur_year=1
+-- group by user_id;
+
+select user_id from cte
+where product like 'TurboTax%' 
+  and (year1 is not null and cur_year is not null and cur_year2 is not null)
+group by user_id
+
+-- with cte as(
+--   select user_id,product
+--   ,extract(year from filing_date) as year1
+--   ,lag(extract(year from filing_date))over(partition by user_id order by filing_date asc) as cur_year
+--   -- ,lag(extract(year from filing_date),1)over(partition by user_id order by filing_date asc) as cur_year1
+--   ,lag(extract(year from filing_date),2)over(partition by user_id order by filing_date asc) as cur_year2
+--   from filed_taxes
+--   where product like 'TurboTax%'
+-- )
+-- select user_id
+-- from cte
+-- where cur_year-cur_year2=1 and year1-cur_year=1
+-- group by user_id;
+
+-- -- select * from cte
+
