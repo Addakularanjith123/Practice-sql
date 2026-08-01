@@ -1,0 +1,12 @@
+-- SELECT * FROM marketing_touches;
+with cte as (
+  select mt.contact_id,cc.email,EXTRACT(week from mt.event_date) as week
+  ,lag(EXTRACT(week from mt.event_date),1)over(partition by mt.contact_id order by mt.event_date) as week2
+  ,lag(EXTRACT(week from mt.event_date),2)over(partition by mt.contact_id order by mt.event_date) as week3
+  from marketing_touches mt 
+  left join crm_contacts cc on mt.contact_id=cc.contact_id
+  group by mt.contact_id,week,cc.email,mt.event_date
+  order by mt.contact_id,week
+  )
+select email from cte
+where week-week2=1 and week2-week3=1
