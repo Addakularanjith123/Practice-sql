@@ -1,0 +1,19 @@
+-- SELECT * FROM user_transactions;
+with cte1 as(
+  select EXTRACT(year from transaction_date) as year,product_id
+  ,sum(spend) as total
+  from user_transactions
+  group by product_id,year 
+  order by product_id,year
+),
+cte2 as (
+  select year,product_id
+  ,total as curr_year_spend
+  -- ,lag(total)over(partition by product_id order by year) as curr_year_spend
+  ,lag(total,1)over(partition by product_id order by year) as pre_year_spend
+  from cte1
+)
+select year,product_id,curr_year_spend,pre_year_spend
+  ,round(100.0*(curr_year_spend-pre_year_spend)/pre_year_spend,2) as yoy_rate
+from cte2
+-- select * from cte2
