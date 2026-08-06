@@ -8,3 +8,4 @@ WHERE EXTRACT(YEAR FROM j.event_date) = 2022
   AND EXTRACT(MONTH FROM j.event_date) = 7
   AND EXTRACT(YEAR FROM p.event_date) = 2022
   AND EXTRACT(MONTH FROM p.event_date) = 6;
+
