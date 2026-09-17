@@ -1,0 +1,233 @@
+CREATE TABLE dim_customers (
+    customer_id VARCHAR(20) PRIMARY KEY,
+    full_name VARCHAR(100),
+    gender VARCHAR(20),
+    birth_date varchar(50),
+    phone VARCHAR(20),
+    email VARCHAR(150),
+    city VARCHAR(100),
+    region VARCHAR(100),
+    loyalty_tier VARCHAR(50),
+    registration_date varchar(30)
+);
+
+
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/dim_cust_final.csv'
+INTO TABLE dim_customers
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+
+-- ============================================
+-- 2. DIM_STORES
+-- ============================================
+
+CREATE TABLE dim_stores (
+    store_id VARCHAR(20) PRIMARY KEY,
+    store_name VARCHAR(100),
+    city VARCHAR(100),
+    district VARCHAR(100),
+    region VARCHAR(100),
+    opening_year YEAR,
+    size_sqm DECIMAL(10,2),
+    store_type VARCHAR(50)
+);
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/dim_stores.csv'
+INTO TABLE dim_stores
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+
+-- ============================================
+-- 3. DIM_DATE_FINAL
+-- ============================================
+
+CREATE TABLE dim_date_final (
+    date_id varchar(30) PRIMARY KEY,
+    full_date varchar(30),
+    quarter_name VARCHAR(20),
+    day_of_week VARCHAR(20),
+    day_name VARCHAR(20),
+    is_weekend BOOLEAN,
+    week_of_year INT
+);
+
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/dim_date_final.csv'
+INTO TABLE dim_date_final
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+
+
+-- ============================================
+-- 4. DIM_PRODUCTS
+-- ============================================
+
+CREATE TABLE dim_products (
+    product_id VARCHAR(20) PRIMARY KEY,
+    product_name_raw VARCHAR(255),
+    category VARCHAR(100),
+    subcategory VARCHAR(100),
+    brand VARCHAR(100),
+    unit_price_text VARCHAR(50),
+    unit_price DECIMAL(10,2),
+    unit_cost DECIMAL(10,2),
+    stock_qty INT,
+    is_active BOOLEAN
+);
+
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/dim_products.csv'
+INTO TABLE dim_products
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+
+
+
+-- ============================================
+-- 5. DIM_EMPLOYEES
+-- ============================================
+
+CREATE TABLE dim_employees (
+    employee_id VARCHAR(20) PRIMARY KEY,
+    first_name VARCHAR(100),
+    last_name VARCHAR(100),
+    gender VARCHAR(20),
+    role VARCHAR(100),
+    store_id VARCHAR(20),
+    hire_date varchar(30),
+    monthly_salary_egp DECIMAL(12,2),
+
+    CONSTRAINT fk_employee_store
+        FOREIGN KEY (store_id)
+        REFERENCES dim_stores(store_id)
+);
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/dim_employees_cleaned.csv'
+INTO TABLE dim_employees
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+-- ============================================
+-- 6. FACT_FINAL_ORDERS
+-- ============================================
+
+CREATE TABLE fact_final_orders (
+    order_id VARCHAR(20) PRIMARY KEY,
+    order_date varchar(30),
+    date_id varchar(10),
+    customer_id VARCHAR(20),
+    store_id VARCHAR(20),
+    employee_id VARCHAR(20) null,
+    payment_method VARCHAR(50),
+    order_status VARCHAR(50),
+    total_revenue DECIMAL(12,2),
+    total_cost DECIMAL(12,2),
+
+    CONSTRAINT fk_order_date
+        FOREIGN KEY (date_id)
+        REFERENCES dim_date_final(date_id),
+
+    CONSTRAINT fk_order_customer
+        FOREIGN KEY (customer_id)
+        REFERENCES dim_customers(customer_id),
+
+    CONSTRAINT fk_order_store
+        FOREIGN KEY (store_id)
+        REFERENCES dim_stores(store_id),
+
+    CONSTRAINT fk_order_employee
+        FOREIGN KEY (employee_id)
+        REFERENCES dim_employees(employee_id)
+);
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/fact_final_orders.csv'
+INTO TABLE fact_final_orders
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(
+    order_id,
+    order_date,
+    date_id,
+    customer_id,
+    store_id,
+    @employee_id,
+    payment_method,
+    order_status,
+    total_revenue,
+    total_cost
+)
+SET employee_id = NULLIF(TRIM(@employee_id), '');
+
+-- ============================================
+-- 7. DIM_ORDER_DETAILS
+-- ============================================
+
+CREATE TABLE dim_order_details (
+    detail_id VARCHAR(20) PRIMARY KEY,
+    order_id VARCHAR(20),
+    product_id VARCHAR(20),
+    quantity INT,
+    unit_price DECIMAL(10,2),
+    discount_pct DECIMAL(5,2),
+    selling_price DECIMAL(10,2),
+    unit_cost DECIMAL(10,2),
+    line_total_revenue DECIMAL(12,2),
+    line_total_cost DECIMAL(12,2),
+
+    CONSTRAINT fk_detail_order
+        FOREIGN KEY (order_id)
+        REFERENCES fact_final_orders(order_id),
+
+    CONSTRAINT fk_detail_product
+        FOREIGN KEY (product_id)
+        REFERENCES dim_products(product_id)
+);
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/dim_order_details.csv'
+INTO TABLE dim_order_details
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+-- ============================================
+-- 8. DIM_RETURNS
+-- ============================================
+
+CREATE TABLE dim_returns (
+    return_id VARCHAR(20) PRIMARY KEY,
+    order_id VARCHAR(20),
+    return_date varchar(30),
+    return_reason VARCHAR(255),
+    return_amount DECIMAL(12,2),
+    refund_method VARCHAR(50),
+    return_status VARCHAR(50),
+
+    CONSTRAINT fk_return_order
+        FOREIGN KEY (order_id)
+        REFERENCES fact_final_orders(order_id)
+);
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/dim_returns.csv'
+INTO TABLE dim_returns
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
