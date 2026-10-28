@@ -13,7 +13,7 @@ CREATE TABLE dim_customers (
 
 
 
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/dim_cust_final.csv'
+LOAD DATA INFILE '/workspaces/Practice-sql/demo/dim_cust_final.csv'
 INTO TABLE dim_customers
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
@@ -36,7 +36,7 @@ CREATE TABLE dim_stores (
     store_type VARCHAR(50)
 );
 
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/dim_stores.csv'
+LOAD DATA INFILE '/workspaces/Practice-sql/demo/dim_stores.csv'
 INTO TABLE dim_stores
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
